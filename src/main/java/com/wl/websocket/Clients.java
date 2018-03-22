@@ -16,21 +16,21 @@ import java.util.List;
 @Component
 public class Clients extends AbstractWebSocket {
 
-    private List<Object> listIjiamiWebSocket;
+    private List<Object> listWebSocket;
 
     @Autowired
     private SpringBeanUtil springBeanUtil;
 
     private void init(){
-        if (listIjiamiWebSocket == null) {
-            listIjiamiWebSocket = springBeanUtil.getBeansByInterface(IWebSocket.class);
+        if (listWebSocket == null) {
+            listWebSocket = springBeanUtil.getBeansByInterface(IWebSocket.class);
         }
     }
 
     @Override
     public void onOpen(WebSocketSession session) {
         init();
-        for(Object obj : listIjiamiWebSocket){
+        for(Object obj : listWebSocket){
             IWebSocket webSocket = (IWebSocket)obj;
             webSocket.onOpen(session);
         }
@@ -38,7 +38,7 @@ public class Clients extends AbstractWebSocket {
 
     @Override
     public void onClose(WebSocketSession session) {
-        for(Object obj : listIjiamiWebSocket){
+        for(Object obj : listWebSocket){
             IWebSocket webSocket = (IWebSocket)obj;
             webSocket.onClose(session);
         }
@@ -46,7 +46,7 @@ public class Clients extends AbstractWebSocket {
 
     @Override
     public void onMessage(WebSocketSession session, TextMessage message) {
-        for(Object obj : listIjiamiWebSocket){
+        for(Object obj : listWebSocket){
             IWebSocket webSocket = (IWebSocket)obj;
             webSocket.onMessage(session, message);
         }
@@ -54,7 +54,7 @@ public class Clients extends AbstractWebSocket {
 
     @Override
     public void onError(WebSocketSession session, Throwable exception) {
-        for(Object obj : listIjiamiWebSocket){
+        for(Object obj : listWebSocket){
             IWebSocket webSocket = (IWebSocket)obj;
             webSocket.onError(session, exception);
         }

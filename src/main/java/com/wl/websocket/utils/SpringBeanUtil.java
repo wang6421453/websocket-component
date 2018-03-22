@@ -16,12 +16,12 @@ import java.util.Map;
 @Component
 public class SpringBeanUtil implements ApplicationContextAware {
 
-    private Map<String, Object> serviceBeans;
+    private Map<String, Object> beans;
 
     @Override
     public void setApplicationContext(ApplicationContext ac) throws BeansException {
         //获得所有serviceBeans
-        serviceBeans =ac.getBeansWithAnnotation(org.springframework.stereotype.Component.class);
+        beans =ac.getBeansWithAnnotation(org.springframework.stereotype.Component.class);
     }
 
     /**
@@ -33,8 +33,8 @@ public class SpringBeanUtil implements ApplicationContextAware {
      */
     public List<Object> getBeansByInterface(Class<?> interfaceType){
         List<Object> tList = new ArrayList<Object>();
-        for(String key : serviceBeans.keySet()) {
-            Object obj = serviceBeans.get(key);
+        for(String key : beans.keySet()) {
+            Object obj = beans.get(key);
             for(Class<?> c : obj.getClass().getInterfaces()) {
                 if(c.getName().equals(interfaceType.getName())) {
                     tList.add(obj);
